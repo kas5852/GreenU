@@ -25,6 +25,15 @@ export class User {
 export class Connector {
   currentUser = null;
   constructor(private http:HttpClient) { }
+
+  public getLeaderboard() {
+    return this.http.post("http://localhost:5000/leaderboard", {}).map(
+      resp => {
+        console.log("Leaderboard:", resp);
+        return resp;
+      }
+    );
+  }
  
   public login(credentials) {
     if (credentials.email === null || credentials.password === null) {

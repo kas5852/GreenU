@@ -39,16 +39,17 @@
         All Schools
     </ion-label>
     <ion-list>
-        <button ion-item *ngFor="let college of colleges" (click)="openCollege(college.name)" class="schools">
+        <button ion-item *ngFor="let college of colleges" (click)="openCollege(college.school)" class="schools">
             <ion-note item-start>
                 {{college.rank}}
             </ion-note>
             <ion-label>
-                {{college.name}}
+                {{college.school}}
             </ion-label>
             <ion-note item-end>
                 {{college.score}}
             </ion-note>
         </button>
     </ion-list>
+    <ion-spinner *ngIf="showSpinner" style="width: 100%;margin: auto;z-index:1;"></ion-spinner>
 </ion-content>
