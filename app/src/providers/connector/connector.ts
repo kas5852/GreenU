@@ -56,25 +56,13 @@ export class Connector {
       console.log(credentials);
       return this.http.post('http://localhost:5000/dashboard', credentials).map(
         res => { 
-          console.log(res);
-          this.universityPoints(res["school"]).subscribe(
-            res => {
-              this.currentUser = new User(res["name"], credentials.email, res["school"], res["items"], res["totalPoints"], String(res));
+              this.currentUser = new User(res["name"], credentials.email, res["school"], res["items"], res["totalPoints"], res["universityPoints"]);
               return this.currentUser; 
-            }
-          )
         }
       );
     } 
 }
 
-public universityPoints(university)
-{
-  return this.http.post('http://localhost:5000/universityPoints', {"university": university}).map(
-    res => { return res; }
-  );
-}
- 
 public register(credentials) {
     if (credentials.email === null || credentials.password === null || credentials.name == null || credentials.school) {
       return Observable.throw("Please enter both email and password.");
