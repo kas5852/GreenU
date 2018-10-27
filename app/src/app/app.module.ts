@@ -17,6 +17,7 @@ import { RegionPopoverPage } from "../pages/region-popover/region-popover";
 import { InnerSchoolLeaderboardPage } from "../pages/inner-school-leaderboard/inner-school-leaderboard";
 import { Connector } from '../providers/connector/connector';
 import { AchievementsPage } from '../pages/achievements/achievements';
+import { LocalNotifications } from '@ionic-native/local-notifications';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { AchievementsPage } from '../pages/achievements/achievements';
   imports: [
     BrowserModule,
     HttpClientModule,
+    LocalNotifications,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot()
   ],

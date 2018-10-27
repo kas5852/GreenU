@@ -10,12 +10,13 @@
         </button>
     </ion-fab>
     <ion-card class="dashboardCard">
+        <ion-img width="80px" height="98px" style="background: transparent; position: absolute; right: 10%; top: 4%" src="../../assets/imgs/gold.png"></ion-img>
         <ion-card-header>Hi {{name}}!</ion-card-header>
         <ion-card-content>
             You have {{points}} points.<br>
             {{university}} has {{universityPoints}} points.
         </ion-card-content>
-        <ion-card-header>Today you have:</ion-card-header>
+        <ion-card-header>Today:</ion-card-header>
         <ion-list>
             <ion-item *ngFor="let task of completedTasks" class="tasks">
                 {{task.keyword}} 
