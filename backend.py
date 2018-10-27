@@ -153,41 +153,73 @@ def school():
     cursor.execute('SELECT sum(points) AS score, school FROM students WHERE SCHOOL = ?', (request.json["school"],))
     query = cursor.fetchone()
     return json.dumps(query)
-    
-#        @app.route('/register', methods=['GET', 'POST'])
 
 
-# def add():
-#     mydb = sqlite3.connect('CodeForGood.db')
-#     cursor = mydb.cursor()
-#     returnJSON = {}
-#     if request.method == 'POST':
-        
-#         user = request.json
-#         email = user['email']
-        
-#         keyword = user['keyword']
+@app.route('/addTask', methods=['GET', 'POST'])
+def add():
+	mydb = sqlite3.connect('CodeForGood.db')
+	cursor = mydb.cursor()
+	returnJSON = {}
+	if request.method == 'POST':
+		
+		user = request.json
+		email = user['email']
+		
+		keyword = user['keyword']
 
-#         cursor.execute('SELECT POINTVALUE FROM TASKIDS WHERE TASKID=?', (taskID,))
+		cursor.execute('SELECT POINTVALUE FROM TASKSIDS WHERE KEYWORD=?', (keyword,))
+		value = cursor.fetchone()
 
-#         if cursor.fetchone():
+		if value:
 
-#             studentID = cursor.execute('Select ID from students where email = ?', (email,)).fetchone()
+			cursor.execute('SELECT ID, POINTS, SCHOOL FROM STUDENTS WHERE EMAIL = ?', (email,))
+			query = cursor.fetchone()
+			studentID = query[0]
+			totalPoints = int(value[0]) + int(query[1])
+			school = query[2]
 
-#             cursor.execute('INSERT INTO STUDENTTASKS (ID, KEYWORD) VALUES (?,?)', (studentID, keyword,))
-#             d1 = {'totalPoints': 0}
-#             d2 = {'items': {}}
-#             d3 = {'school': school}
-#             returnJSON.update(d1)
-#             returnJSON.update(d2)
-#             returnJSON.update(d3)
-#             mydb.commit()
-#             return jsonify(returnJSON)
-            
-#         else:
+			cursor.execute('INSERT INTO STUDENTTASKS (ID, KEYWORD) VALUES (?,?)', (studentID, keyword,))
+			cursor.execute('UPDATE STUDENTS SET POINTS = ? WHERE ID = studentID', (totalPoints,))
+			d1 = {'totalPoints': totalPoints}
+			d2 = {'items': keyword}
+			d3 = {'school': school}
+			returnJSON.update(d1)
+			returnJSON.update(d2)
+			returnJSON.update(d3)
+			mydb.commit()
+			return jsonify(returnJSON)
+			
+		else:
+			return("wrong keyword")
+			
+
+
+@app.route('/getUni', methods=['GET', 'POST'])
+def getUni():
+	mydb = sqlite3.connect('CodeForGood.db')
+	cursor = mydb.cursor()
+	returnJSON = {}
+	dictionaryList = []
+	if request.method == 'POST':
+		user = request.json
+		school = user['school']
+
+		cursor.execute('SELECT ID, NAME, POINTS FROM STUDENTS WHERE SCHOOL = ? order by points desc',(school,))
+		query = cursor.fetchall()
+
+		for student in query: 
+			dictionary = {}
+			d1 = {'score': student[2]}
+			d2 = {'name': student[1]}
+			d3 = {'student': student[0]}
+			dictionary.update(d1)
+			dictionary.update(d2)
+			dictionaryList.append(dictionary)
+
+		return jsonify(dictionaryList)
 
 app.run(debug=True)
-        
+
 
 
 
