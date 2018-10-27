@@ -35,7 +35,7 @@ thisdict =	{
   26: "Wash clothes with cold water"
 }
 
-mydb = sqllite3.connect('local.db')
+mydb = sqllite3.connect('CodeForGood.db')
 cursor = mydb.cursor()
 app = Flask(__name__)
 
