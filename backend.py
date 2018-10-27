@@ -1,6 +1,6 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 import json 
-import mysql.connector
+# import mysql.connector
 import sqlite3 
 
 
@@ -100,7 +100,7 @@ def login():
 		            returnJSON.update(d2)
 		            returnJSON.update(d3)
 
-		            return returnJSON
+		            return jsonify(returnJSON)
 
 		        else:
 		            d1 = {'totalPoints': 0}
@@ -108,7 +108,7 @@ def login():
 		            returnJSON.update(d1)
 		            returnJSON.update({})
 		            returnJSON.update(d3)
-		            print(returnJSON)
+		            return jsonify(returnJSON)
 
 		    else:
 		        return "Student info was empty for some reason"
@@ -117,10 +117,10 @@ def login():
 		    return "Invalid Username"
 
 
-@app.route('/register', methods=['GET', 'POST'])
+# @app.route('/register', methods=['GET', 'POST'])
 
 
-app.run()
+app.run(debug=True)
 		
 
 
