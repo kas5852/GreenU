@@ -34,9 +34,33 @@ import sqlite3
 #   26: "Wash clothes with cold water"
 # }
 
-mydb = sqlite3.connect('local.db')
+
+
+mydb = sqlite3.connect('CodeForGood.db')
 cursor = mydb.cursor()
 app = Flask(__name__)
+
+
+# def register():
+# 	returnJSON = {}
+# 	if request.method == 'POST':
+# 		user = request.json
+# 		username = user['username']
+# 		school = user['school']
+# 		cursor.execute('SELECT (%s) FROM STUDENTS', username)
+
+# 		if cursor.fetch():
+# 			return "User already exist :("
+# 		else:
+# 			cursor.execute('INSERT INTO STUDENTS (ID, USERNAME, SCHOOL, POINTS) VALUES (NULL, (%s), (%s), '0')', username, school)
+# 			retunJSON.update('totalPoints' = 0)
+# 			retunJSON.update('items' = None)
+# 			returnJSON.update('school' = school)
+# 			return returnJSON
+
+
+
+
 
 @app.route('/dashboard', methods=['GET', 'POST'])
 def login():
@@ -123,13 +147,6 @@ def login():
 
 app.run()
 		
-
-
-# @app.route('/addStuff', ['GET', 'POST'])
-# def addStuff():
-# 	# mydb = mysql.connector.connect(host=, username=,password=)
-# 	if request.method == 'POST':
-# 		item = request.json 
 
 
 
