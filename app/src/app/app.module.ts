@@ -35,7 +35,6 @@ import { LocalNotifications } from '@ionic-native/local-notifications';
   imports: [
     BrowserModule,
     HttpClientModule,
-    LocalNotifications,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot()
   ],
@@ -56,6 +55,7 @@ import { LocalNotifications } from '@ionic-native/local-notifications';
     StatusBar,
     SplashScreen,
     Connector,
+    LocalNotifications,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
