@@ -1,5 +1,5 @@
 <ion-header>
-    <ion-toolbar color="lol-white">
+    <ion-toolbar>
         <ion-title>What'd You Do?</ion-title>
         <ion-buttons start>
             <button ion-button (click)="closeModel()">
@@ -10,16 +10,16 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="modalContent">
 
     <ion-searchbar (ionInput)="filterTasks($event)">       
 
     </ion-searchbar>
     <ion-list>
-        <button ion-item *ngFor="let task of tasks" (click)="selectTask(task)">
-            {{task}}
+        <button ion-item *ngFor="let task of tasks" (click)="selectTask(task)" class="tasks">
+            {{task.name}}
             <ion-note item-end>
-                20
+                {{task.score}}
             </ion-note>
         </button>
         
