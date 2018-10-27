@@ -10,25 +10,7 @@ mydb = sqlite3.connect('CodeForGood.db')
 cursor = mydb.cursor()
 app = Flask(__name__)
 
-def register():
-	retunJSON = {}
-	if request.method == 'POST':
-		user = request.json
-		email = user['email']
-		name = user['name']
-		school = user['school']
 
-		if cursor.fetch():
-			return "User already exist :("
-		else:
-			cursor.execute('INSERT INTO STUDENTS (ID, EMAIL, NAME, SCHOOL, POINTS) VALUES (NULL, (%s), (%s), (%s), 0', email, name, school)
-			d1 = {'totalPoints': 0}
-			d2 = {'items': None}
-			d3 = {'school': school}
-			retunJSON.update(d1)
-			retunJSON.update(d2)
-			retunJSON.update(d3)
-			return retunJSON
 
 
 @app.route('/dashboard', methods=['GET', 'POST'])
