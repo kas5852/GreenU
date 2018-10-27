@@ -8,9 +8,9 @@ A college student's eco friendly platform
 
 ## Built With:
 
-Ionic-Angular
-Python
-SQL
+* Ionic-Angular
+* Python
+* SQL
 
 ## Acknowledgments
 
