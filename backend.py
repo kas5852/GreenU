@@ -18,8 +18,9 @@ def register():
 		name = user['name']
 		school = user['school']
 
-		cursor.execute('SELECT ? FROM STUDENTS', (email,))
-		if cursor.fetch():
+		cursor.execute('SELECT EMAIL FROM STUDENTS WHERE email=?', (email,))
+
+		if cursor.fetchone():
 			return "User already exist :("
 		else:
 			cursor.execute('INSERT INTO STUDENTS (ID, EMAIL, NAME, SCHOOL, POINTS) VALUES (NULL, ?, ?, ?, 0)', (email, name, school,))
@@ -29,7 +30,8 @@ def register():
 			returnJSON.update(d1)
 			returnJSON.update(d2)
 			returnJSON.update(d3)
-			return returnJSON
+			mydb.commit()
+			return jsonify(returnJSON)
 
 
 
