@@ -18,13 +18,13 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding class="leaderboardContent">
     <ion-searchbar (ionInput)="filterLeaderboard($event)">
     </ion-searchbar>
     <ion-label>
         Your School
     </ion-label>
-    <button ion-item (click)="openCollege(yourSchool)">
+    <button ion-item (click)="openYourCollege()" class="schools">
         <ion-note item-start>
             1
         </ion-note>
@@ -39,7 +39,7 @@
         All Schools
     </ion-label>
     <ion-list>
-        <button ion-item *ngFor="let college of colleges" (click)="openCollege(college)">
+        <button ion-item *ngFor="let college of colleges" (click)="openCollege(college.name)" class="schools">
             <ion-note item-start>
                 {{college.rank}}
             </ion-note>

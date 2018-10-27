@@ -20,8 +20,8 @@ export class BasePage {
         this.completedTasks = [];
         this.name = "Nahum Getachew";
         this.university = "Columbia University";
-        this.points = 1000;
-        this.universityPoints = 100000;
+        this.points = 0;
+        this.universityPoints = 100;
     }
 
     ionViewDidLoad() {
@@ -33,8 +33,11 @@ export class BasePage {
         const modal = this.modalCtrl.create(TaskModalPage);
         modal.onDidDismiss(
             task => {
-                if (task != null)
+                if (task != null) {
                     this.completedTasks.push(task);
+                    this.points += Number(task.score);
+                    this.universityPoints += Number(task.score);
+                }
             }
         );
         modal.present();
