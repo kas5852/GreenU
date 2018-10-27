@@ -10,7 +10,7 @@
         </button>
     </ion-fab>
     <ion-card class="dashboardCard">
-        <ion-card-header>Hi {{name}}</ion-card-header>
+        <ion-card-header>Hi {{name}}!</ion-card-header>
         <ion-card-content>
             You have {{points}} points.<br>
             {{university}} has {{universityPoints}} points.
@@ -18,9 +18,9 @@
         <ion-card-header>Today you have:</ion-card-header>
         <ion-list>
             <ion-item *ngFor="let task of completedTasks" class="tasks">
-                {{task.name}}
+                {{task.itemID}}
             <ion-note item-end>
-                {{task.score}}
+                {{task.itemPoint}}
             </ion-note>
             </ion-item>
         </ion-list>

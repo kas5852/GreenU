@@ -20,7 +20,6 @@ export class LoginPage {
   }
  
   public login() {
-    console.log("login()");
     this.connector.login(this.registerCredentials).subscribe(resp => {
       console.log(resp);
       if (resp) {        

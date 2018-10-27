@@ -17,9 +17,9 @@
     </ion-searchbar>
     <ion-list>
         <button ion-item *ngFor="let task of tasks" (click)="selectTask(task)" class="tasks">
-            {{task.name}}
+            {{task.itemID}}
             <ion-note item-end>
-                {{task.score}}
+                {{task.itemPoint}}
             </ion-note>
         </button>
         

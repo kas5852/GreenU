@@ -40,16 +40,16 @@ export class TaskModalPage {
     getAllTasks() {
         const tasks = [
             {
-                "name": "Recycle Drinks",
-                "score": "5"
+                "itemID": "Recycle Drinks",
+                "itemPoint": "5"
             },
             {
-                "name": "Ride Bike to Work",
-                "score": "15"
+                "itemID": "Ride Bike to Work",
+                "itemPoint": "15"
             },
             {
-                "name": "Walk to Work",
-                "score": "20"
+                "itemID": "Walk to Work",
+                "itemPoint": "20"
             }
         ];
         return tasks;
