@@ -196,7 +196,7 @@ def getUni():
 		user = request.json
 		school = user['school']
 
-		cursor.execute('SELECT ID, NAME, POINTS FROM STUDENTS WHERE SCHOOL = ?',(school,))
+		cursor.execute('SELECT ID, NAME, POINTS FROM STUDENTS WHERE SCHOOL = ? order by points desc',(school,))
 		query = cursor.fetchall()
 
 		for student in query: 
