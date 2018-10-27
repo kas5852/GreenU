@@ -233,9 +233,5 @@ def suggestions():
     return json.dumps(all_tasks[0:6])
 
 
-app.run(debug=True)
-
-
-
-
+app.run(host='0.0.0.0', port=80)
 
