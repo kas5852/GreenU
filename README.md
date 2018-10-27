@@ -9,7 +9,7 @@ A college student's eco friendly platform
 ## Built With:
 
 * Ionic-Angular
-* Python (Flask
+* Python (Flask)
 * SQL
 
 ## Acknowledgments
