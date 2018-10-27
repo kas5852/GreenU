@@ -8,13 +8,19 @@ import { MyApp } from './app.component';
 import { HomePage } from "../pages/home/home";
 import { BasePage } from "../pages/base/base";
 import { TaskModalPage } from "../pages/task-modal/task-modal";
+import { LeaderboardPage } from "../pages/leaderboard/leaderboard";
+import { RegionPopoverPage } from "../pages/region-popover/region-popover";
+import { InnerSchoolLeaderboardPage } from "../pages/inner-school-leaderboard/inner-school-leaderboard";
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     BasePage,
-    TaskModalPage
+    TaskModalPage,
+    LeaderboardPage,
+    RegionPopoverPage,
+    InnerSchoolLeaderboardPage
   ],
   imports: [
     BrowserModule,
@@ -25,7 +31,10 @@ import { TaskModalPage } from "../pages/task-modal/task-modal";
     MyApp,
     HomePage,
     BasePage,
-    TaskModalPage
+    TaskModalPage,
+    LeaderboardPage,
+    RegionPopoverPage,
+    InnerSchoolLeaderboardPage
   ],
   providers: [
     StatusBar,

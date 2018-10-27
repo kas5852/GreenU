@@ -13,6 +13,9 @@
             <ion-list>
                 <ion-item *ngFor="let task of uncompletedTasks">
                     {{task}}
+                    <ion-note item-end>
+                        20
+                    </ion-note>
                 </ion-item>
             </ion-list>
         </ion-card-content>
@@ -25,6 +28,9 @@
             <ion-list>
                 <ion-item *ngFor="let task of completedTasks">
                     {{task}}
+                    <ion-note item-end>
+                        20
+                    </ion-note>
                 </ion-item>
             </ion-list>
         </ion-card-content>

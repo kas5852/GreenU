@@ -3,6 +3,10 @@
     <ion-list>
         <button ion-item *ngFor="let task of tasks" (click)="selectTask(task)">
             {{task}}
+            <ion-note item-end>
+                20
+            </ion-note>
         </button>
+        
     </ion-list>
 </ion-content>
