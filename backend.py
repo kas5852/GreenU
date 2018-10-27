@@ -98,12 +98,16 @@ def login():
                     cursor.execute('SELECT sum(points) AS score, school FROM students WHERE SCHOOL = ?', (school,))
                     query = cursor.fetchone()
 
+                    cursor.execute("SELECT KEYWORD, TASKDESC, POINTVALUE FROM Suggestions")
+                    all_tasks = cursor.fetchall()
+                    random.shuffle(all_tasks)
+
                     returnJSON.update(d1)
                     returnJSON.update(d2)
                     returnJSON.update(d3)
                     returnJSON.update(d4)
                     returnJSON["universityPoints"] = query[0]
-
+                    returnJSON["suggestions"] = all_tasks[0:6]
                     return jsonify(returnJSON)
 
                 else:

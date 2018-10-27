@@ -18,9 +18,9 @@
         <ion-card-header>Today you have:</ion-card-header>
         <ion-list>
             <ion-item *ngFor="let task of completedTasks" class="tasks">
-                {{task.itemID}}
+                {{task.itemID}} 
             <ion-note item-end>
-                {{task.itemPoint}}
+                {{task.itemPoint}} pts.
             </ion-note>
             </ion-item>
         </ion-list>
@@ -31,12 +31,12 @@
         </ion-card-header>
         <ion-card-content>
             <ion-list>
-                <ion-item *ngFor="let task of uncompletedTasks">
-                    {{task}}
-                    <ion-note item-end>
-                        20
-                    </ion-note>
-                </ion-item>
+                <ion-item *ngFor="let task of suggestions" class="tasks">
+                    {{task[0]}}
+                <ion-note item-end>
+                    {{task[2]}} pts.
+                </ion-note>
+            </ion-item>
             </ion-list>
         </ion-card-content>
     </ion-card>

@@ -10,14 +10,16 @@ export class User {
   items: any[];
   points: string;
   universityPoints: string;
+  suggestions: any[];
 
-  constructor(name: string, email: string, school: string, items: any[], points: string, universityPoints: string) {
+  constructor(name: string, email: string, school: string, items: any[], points: string, universityPoints: string, suggestions: any[]) {
     this.name = name;
     this.email = email;
     this.school = school;
     this.items = items;
     this.points = points;
     this.universityPoints = universityPoints;
+    this.suggestions = suggestions;
   }
 }
  
@@ -56,11 +58,11 @@ export class Connector {
       console.log(credentials);
       return this.http.post('http://localhost:5000/dashboard', credentials).map(
         res => { 
-              this.currentUser = new User(res["name"], credentials.email, res["school"], res["items"], res["totalPoints"], res["universityPoints"]);
+              this.currentUser = new User(res["name"], credentials.email, res["school"], res["items"], res["totalPoints"], res["universityPoints"], res["suggestions"]);
               return this.currentUser; 
         }
       );
-    } 
+    }
 }
 
 public register(credentials) {
@@ -81,6 +83,14 @@ public register(credentials) {
     }
   }
  
+  public suggestions() {
+    return this.http.post("http://localhost:5000/getSuggestions", {}).map(
+      resp => {
+        return resp;
+      }
+    );
+  }
+
   public logout() {
     return Observable.create(observer => {
       observer.next(true);

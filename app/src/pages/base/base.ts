@@ -17,6 +17,7 @@ export class BasePage {
         if (this.connector.currentUser)
         {
             this.completedTasks = this.connector.currentUser.items;
+            this.suggestions = this.connector.currentUser.suggestions;
             this.name = this.connector.currentUser.name;
             this.university = this.connector.currentUser.school;
             this.points = this.connector.currentUser.points;
@@ -38,6 +39,7 @@ export class BasePage {
         modal.present();
     }
     completedTasks: any[];
+    suggestions: any[];
     name: string;
     university: string;
     points: any;
