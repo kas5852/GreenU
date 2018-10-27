@@ -39,6 +39,18 @@ mydb = sqllite3.connect('local.db')
 cursor = mydb.cursor()
 app = Flask(__name__)
 
+
+def register():
+
+	if request.method == 'POST':
+		user = request.json
+		username = user['username']
+		school = user['school']
+		
+
+
+
+
 @app.route('/dashboard', methods=['GET', 'POST'])
 def login():
 	#list of dictionaries to return 
@@ -50,7 +62,7 @@ def login():
 		
 		user = request.json 
 		username = user['username']
-		cursor.execute('SELECT (%s) FROM STUDENTS')
+		cursor.execute('SELECT (%s) FROM STUDENTS', username)
 
 		if cursor.fetchone():
 			
