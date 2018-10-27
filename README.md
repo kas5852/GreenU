@@ -1,9 +1,18 @@
-GREEN U
+# Green U
 
-Hi
-wasssup
-hey
+A college student's eco friendly platform
 
-### Frontend
-- Written in Ionic-Angular
-- Tabbed application with login, dashboard, and leaderboard
+## Objective
+
+## Features
+
+## Built With:
+
+Ionic-Angular
+Python
+SQL
+
+## Acknowledgments
+
+Thanks to J.P. Morgan & Chase for inviting
+us all to the Code for Good event!
