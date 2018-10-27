@@ -145,6 +145,38 @@ def leaderboard():
 		
 		return jsonify(dictionaryList)
 
+		@app.route('/register', methods=['GET', 'POST'])
+
+
+# def add():
+# 	mydb = sqlite3.connect('CodeForGood.db')
+# 	cursor = mydb.cursor()
+# 	returnJSON = {}
+# 	if request.method == 'POST':
+		
+# 		user = request.json
+# 		email = user['email']
+		
+# 		keyword = user['keyword']
+
+# 		cursor.execute('SELECT POINTVALUE FROM TASKIDS WHERE TASKID=?', (taskID,))
+
+# 		if cursor.fetchone():
+
+# 			studentID = cursor.execute('Select ID from students where email = ?', (email,)).fetchone()
+
+# 			cursor.execute('INSERT INTO STUDENTTASKS (ID, KEYWORD) VALUES (?,?)', (studentID, keyword,))
+# 			d1 = {'totalPoints': 0}
+# 			d2 = {'items': {}}
+# 			d3 = {'school': school}
+# 			returnJSON.update(d1)
+# 			returnJSON.update(d2)
+# 			returnJSON.update(d3)
+# 			mydb.commit()
+# 			return jsonify(returnJSON)
+			
+# 		else:
+			
 
 
 
