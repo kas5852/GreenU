@@ -17,7 +17,6 @@ export class User {
  
 @Injectable()
 export class Connector {
-  currentUser: User;
 
   constructor(private http:HttpClient) { }
  
@@ -48,13 +47,8 @@ export class Connector {
     }
   }
  
-  public getUserInfo() : User {
-    return this.currentUser;
-  }
- 
   public logout() {
     return Observable.create(observer => {
-      this.currentUser = null;
       observer.next(true);
       observer.complete();
     });

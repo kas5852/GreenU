@@ -9,12 +9,12 @@ import { TaskModalPage } from "../task-modal/task-modal";
 })
 export class BasePage {
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, private modalCtrl: ModalController) {
-        this.completedTasks = [];
-        this.name = "Nahum Getachew";
-        this.university = "Columbia University";
-        this.points = 0;
-        this.universityPoints = 100;
+    constructor(public navCtrl: NavController, public navParams: NavParams, private modalCtrl: ModalController, completedTasks, name, university, points, universityPoints) {
+        this.completedTasks = completedTasks;
+        this.name = name;
+        this.university = university;
+        this.points = points;
+        this.universityPoints = universityPoints;
     }
 
     ionViewDidLoad() {
