@@ -81,9 +81,9 @@ def login():
                         itemDescrip = task[0][0]
                         # this will add to return dictionary
 
-                        d1 = {'itemID': item}
-                        d2 = {'itemDescrip': itemDescrip}
-                        d3 = {'itemPoint': task[0][1]}
+                        d1 = {'keyword': item}
+                        d2 = {'taskdesc': itemDescrip}
+                        d3 = {'points': task[0][1]}
                         dictionary.update(d1)
                         dictionary.update(d2)
                         dictionary.update(d3)
@@ -184,7 +184,7 @@ def add():
             school = query[2]
 
             cursor.execute('INSERT INTO STUDENTTASKS (ID, KEYWORD) VALUES (?,?)', (studentID, keyword,))
-            cursor.execute('UPDATE STUDENTS SET POINTS = ? WHERE ID = studentID', (totalPoints,))
+            cursor.execute('UPDATE STUDENTS SET POINTS = ? WHERE ID =?', (totalPoints,studentID))
             d1 = {'totalPoints': totalPoints}
             d2 = {'items': keyword}
             d3 = {'school': school}
@@ -223,6 +223,7 @@ def getUni():
 
         return jsonify(dictionaryList)
 
+
 @app.route('/suggestions', methods=['POST'])
 def suggestions():
     mydb = sqlite3.connect('CodeForGood.db')
@@ -230,7 +231,59 @@ def suggestions():
     cursor.execute("SELECT KEYWORD, TASKDESC, POINTVALUE FROM Suggestions")
     all_tasks = cursor.fetchall()
     random.shuffle(all_tasks)
-    return json.dumps(all_tasks[0:6])
+    return jsonify(all_tasks[0:6])
+
+
+@app.route('/level', methods=['POST'])
+def levelUp():
+	mydb = sqlite3.connect('CodeForGood.db')
+	cursor = mydb.cursor()
+	dictionaryList = []
+	dictionary = {}
+	if request.method == 'POST':
+		user = request.json 
+		email = user['email']
+
+		cursor.execute("SELECT LEVEL, NAME FROM STUDENTS WHERE EMAIL = ?", (email,))
+		query = cursor.fetchone()
+		name = query[1]
+		level = query[0]
+
+		d1 = {'level': level}
+		d2 = {'name': name}
+		dictionary.update(d1)
+		dictionary.update(d2)
+		dictionaryList.append(dictionary)
+		return jsonify(dictionaryList)
+
+	else: 
+		return("Boo")
+
+
+@app.route('/task')
+def task():
+	mydb = sqlite3.connect('CodeForGood.db')
+	cursor = mydb.cursor()
+	dictionaryList = []
+	dictionary = {}
+	if request.method == 'GET':
+		cursor.execute('SELECT KEYWORD, TASKDESC, POINTVALUE FROM TASKSIDS')
+		query = cursor.fetchall()
+
+		for student in query: 
+			dictionary = {}
+			d1 = {'keyword': student[0]}
+			d2 = {'taskdesc': student[1]}
+			d3 = {'points': student[2]}
+
+			dictionary.update(d1)
+			dictionary.update(d2)
+			dictionary.update(d3)
+			dictionaryList.append(dictionary)
+
+		return jsonify(dictionaryList)
+
+
 
 
 app.run(host='0.0.0.0', port=80)

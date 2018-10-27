@@ -26,6 +26,18 @@ export class LeaderboardPage {
     yourPoints: any;
     constructor(public navCtrl: NavController, public navParams: NavParams, private modalCtrl: ModalController, private connector: Connector) {
         this.title = "Leaderboard";
+    }
+
+    openCollege(college) {
+        const modal = this.modalCtrl.create(InnerSchoolLeaderboardPage,{"school": college});
+        modal.present();
+    }
+    openYourCollege() {
+        this.openCollege(this.yourSchool);
+    }
+
+    ionViewWillEnter() {
+        console.log("Entering leaderboard...");
         this.connector.getUserData(Globals.email).subscribe(
             data => {
                 this.yourSchool = data["school"];
@@ -44,18 +56,6 @@ export class LeaderboardPage {
                 }, 1000);
             }
         );
-    }
-
-    openCollege(college) {
-        const modal = this.modalCtrl.create(InnerSchoolLeaderboardPage,{"school": college});
-        modal.present();
-    }
-    openYourCollege() {
-        this.openCollege(this.yourSchool);
-    }
-
-    ionViewDidLoad() {
-        // console.log('ionViewDidLoad LeaderboardPage');
     }
 
     filterLeaderboard(event) {
