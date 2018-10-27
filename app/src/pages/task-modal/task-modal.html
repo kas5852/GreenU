@@ -1,0 +1,23 @@
+<ion-header>
+    <ion-toolbar color="lol-white">
+        <ion-title>What'd You Do?</ion-title>
+        <ion-buttons start>
+            <button ion-button (click)="closeModel()">
+                <span ion-text showWhen="ios" style="color: black">Close</span>
+                <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+    <ion-searchbar (ionInput)="filterTasks($event)">       
+
+    </ion-searchbar>
+    <ion-list>
+        <button ion-item *ngFor="let task of tasks" (click)="selectTask(task)">
+            {{task}}
+        </button>
+    </ion-list>
+</ion-content>

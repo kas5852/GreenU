@@ -1,0 +1,7 @@
+{
+  "name": "team18",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}
