@@ -20,6 +20,7 @@ export class MyApp {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
+    this.localNotifications.requestPermission();
 
     storage.get('login:status').then(loggedIn => {
         this.rootPage = loggedIn ? HomePage : LoginPage;
@@ -33,6 +34,7 @@ export class MyApp {
         led: 'FF0000',
         sound: null
      });
+     this.localNotifications.fireQueuedEvents();
     }); 
 
       statusBar.styleDefault();
