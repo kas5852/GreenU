@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
+import { HttpClient } from '@angular/common/http';
  
 export class User {
   name: string;
@@ -17,30 +18,39 @@ export class User {
 @Injectable()
 export class Connector {
   currentUser: User;
+
+  constructor(private http:HttpClient)
+  {
+
+  }
  
   public login(credentials) {
     if (credentials.email === null || credentials.password === null) {
-      return Observable.throw("Please insert credentials");
+      return Observable.throw("Please enter both email and password.");
     } else {
-      return Observable.create(observer => {
-        // At this point make a request to your backend to make a real check!
-        this.currentUser = new User('Nahum Getachew', credentials.email, "Columbia University");
-        observer.next(true);
-        observer.complete();
-      });
+      var req = this.http.post('http://localhost:5000', credentials).subscribe(
+        res => {
+          console.log(res);
+        },
+        err => {
+          console.log("Error occured");
+        }
+      );
     }
-  }
+}
  
   public register(credentials) {
-    if (credentials.email === null || credentials.password === null) {
-      return Observable.throw("Please insert credentials");
+    if (credentials.email === null || credentials.password === null || credentials.name == null || credentials.school) {
+      return Observable.throw("Please enter both email and password.");
     } else {
-      // At this point store the credentials to your backend!
-      return Observable.create(observer => {
-        this.currentUser = new User(credentials.name, credentials.email, credentials.school);
-        observer.next(true);
-        observer.complete();
-      });
+      var req = this.http.post('http://localhost:5000', credentials).subscribe(
+        res => {
+          console.log(res);
+        },
+        err => {
+          console.log("Error occured");
+        }
+      );
     }
   }
  
