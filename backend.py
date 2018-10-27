@@ -145,37 +145,44 @@ def leaderboard():
 		
 		return jsonify(dictionaryList)
 
-		@app.route('/register', methods=['GET', 'POST'])
+	
 
-
-# def add():
-# 	mydb = sqlite3.connect('CodeForGood.db')
-# 	cursor = mydb.cursor()
-# 	returnJSON = {}
-# 	if request.method == 'POST':
+@app.route('/addTask', methods=['GET', 'POST'])
+def add():
+	mydb = sqlite3.connect('CodeForGood.db')
+	cursor = mydb.cursor()
+	returnJSON = {}
+	if request.method == 'POST':
 		
-# 		user = request.json
-# 		email = user['email']
+		user = request.json
+		email = user['email']
 		
-# 		keyword = user['keyword']
+		keyword = user['keyword']
 
-# 		cursor.execute('SELECT POINTVALUE FROM TASKIDS WHERE TASKID=?', (taskID,))
+		cursor.execute('SELECT POINTVALUE FROM TASKSIDS WHERE KEYWORD=?', (keyword,))
+		value = cursor.fetchone()
 
-# 		if cursor.fetchone():
+		if value:
 
-# 			studentID = cursor.execute('Select ID from students where email = ?', (email,)).fetchone()
+			cursor.execute('SELECT ID, POINTS, SCHOOL FROM STUDENTS WHERE EMAIL = ?', (email,))
+			query = cursor.fetchone()
+			studentID = query[0]
+			totalPoints = int(value[0]) + int(query[1])
+			school = query[2]
 
-# 			cursor.execute('INSERT INTO STUDENTTASKS (ID, KEYWORD) VALUES (?,?)', (studentID, keyword,))
-# 			d1 = {'totalPoints': 0}
-# 			d2 = {'items': {}}
-# 			d3 = {'school': school}
-# 			returnJSON.update(d1)
-# 			returnJSON.update(d2)
-# 			returnJSON.update(d3)
-# 			mydb.commit()
-# 			return jsonify(returnJSON)
+			cursor.execute('INSERT INTO STUDENTTASKS (ID, KEYWORD) VALUES (?,?)', (studentID, keyword,))
+			cursor.execute('UPDATE STUDENTS SET POINTS = ?', (totalPoints,))
+			d1 = {'totalPoints': totalPoints}
+			d2 = {'items': keyword}
+			d3 = {'school': school}
+			returnJSON.update(d1)
+			returnJSON.update(d2)
+			returnJSON.update(d3)
+			mydb.commit()
+			return jsonify(returnJSON)
 			
-# 		else:
+		else:
+			return("wrong keyword")
 			
 
 
