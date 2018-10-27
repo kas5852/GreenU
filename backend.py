@@ -53,7 +53,7 @@ def register():
 		if cursor.fetch():
 			return "User already exist :("
 		else:
-			cursor.execute('INSERT INTO STUDENTS (ID, EMAIL, NAME SCHOOL, POINTS) VALUES (NULL, (%s), (%s), (%s), '0')', email, name, school)
+			cursor.execute('INSERT INTO STUDENTS (ID, EMAIL, NAME, SCHOOL, POINTS) VALUES (NULL, (%s), (%s), (%s), '0')', email, name, school)
 			retunJSON.update('totalPoints' = 0)
 			retunJSON.update('items' = None)
 			returnJSON.update('school' = school)
