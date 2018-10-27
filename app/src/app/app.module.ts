@@ -16,6 +16,7 @@ import { LeaderboardPage } from "../pages/leaderboard/leaderboard";
 import { RegionPopoverPage } from "../pages/region-popover/region-popover";
 import { InnerSchoolLeaderboardPage } from "../pages/inner-school-leaderboard/inner-school-leaderboard";
 import { Connector } from '../providers/connector/connector';
+import { AchievementsPage } from '../pages/achievements/achievements';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { Connector } from '../providers/connector/connector';
     SignupPage,
     LoginPage,
     LeaderboardPage,
+    AchievementsPage,
     RegionPopoverPage,
     InnerSchoolLeaderboardPage
   ],
@@ -44,6 +46,7 @@ import { Connector } from '../providers/connector/connector';
     SignupPage,
     LoginPage,
     LeaderboardPage,
+    AchievementsPage,
     RegionPopoverPage,
     InnerSchoolLeaderboardPage
   ],

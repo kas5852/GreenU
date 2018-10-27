@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { BasePage } from "../base/base";
 import { LeaderboardPage } from "../leaderboard/leaderboard";
+import { AchievementsPage } from '../achievements/achievements';
 
 /**
  * Generated class for the HomePage page.
@@ -18,10 +19,12 @@ import { LeaderboardPage } from "../leaderboard/leaderboard";
 export class HomePage {
     home: any;
     leaderboard: any;
+    achievements: any;
 
     constructor(public navCtrl: NavController, public navParams: NavParams) {
         this.home = BasePage;
         this.leaderboard = LeaderboardPage;
+        this.achievements = AchievementsPage;
     }
 
     ionViewDidLoad() {
