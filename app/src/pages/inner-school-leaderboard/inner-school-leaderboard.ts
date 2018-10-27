@@ -41,6 +41,5 @@ export class InnerSchoolLeaderboardPage {
     close() {
         this.view.dismiss();
     }
-    students: any[];
     schoolName: any;
 }
