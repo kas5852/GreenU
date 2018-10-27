@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { Connector } from '../../providers/connector/connector' 
 
 /**
  * Generated class for the InnerSchoolLeaderboardPage page.
@@ -15,12 +16,24 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
 })
 export class InnerSchoolLeaderboardPage {
 
-    defaultStudents: any;
+    defaultStudents: any = [];
     students: any;
-    constructor(public navCtrl: NavController, public navParams: NavParams, private view: ViewController, params: NavParams) {
+    showSpinner = true;
+    constructor(public navCtrl: NavController, public navParams: NavParams, private view: ViewController, params: NavParams, private connect: Connector) {
         this.schoolName = params.get("school");
-        this.defaultStudents = params.get("students");
-        this.students = this.defaultStudents.slice(0);
+        console.log("School name?", this.schoolName);
+        this.connect.getUni(this.schoolName).subscribe(
+            data => {
+                setTimeout(() => {
+                    for(const key of Object.keys(data)) {
+                        data[key]["rank"] = Number(key) + 1;
+                        this.defaultStudents.push(data[key]);
+                    }
+                    this.students = this.defaultStudents.slice(0);
+                    this.showSpinner = false;
+                }, 1000);
+            }
+        );
     }
 
     filterStudents(event) {

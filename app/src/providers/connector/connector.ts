@@ -26,10 +26,24 @@ export class Connector {
   currentUser = null;
   constructor(private http:HttpClient) { }
 
+  public getUserData(email) {
+    return this.http.post("http://localhost:5000/dashboard", {"email": email}).map(
+      resp => {
+        return resp;
+      }
+    );
+  }
   public getLeaderboard() {
     return this.http.post("http://localhost:5000/leaderboard", {}).map(
       resp => {
         console.log("Leaderboard:", resp);
+        return resp;
+      }
+    );
+  }
+  public getUni(school) {
+    return this.http.post("http://localhost:5000/getUni", {"school": school}).map(
+      resp => {
         return resp;
       }
     );

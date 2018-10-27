@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, PopoverController, ModalController } from 'ionic-angular';
 import { InnerSchoolLeaderboardPage } from "../inner-school-leaderboard/inner-school-leaderboard";
 import { Connector } from '../../providers/connector/connector' 
+import { Globals } from "../../Globals";
 
 /**
  * Generated class for the LeaderboardPage page.
@@ -18,13 +19,19 @@ import { Connector } from '../../providers/connector/connector'
 export class LeaderboardPage {
 
     title: any;
-    yourSchool: any;
+    yourSchool: any = "Error, Data hasn't been loaded yet";
     colleges: any[];
     initialColleges: any[] = [];
     showSpinner = true;
+    yourPoints: any;
     constructor(public navCtrl: NavController, public navParams: NavParams, private modalCtrl: ModalController, private connector: Connector) {
         this.title = "Leaderboard";
-        this.yourSchool = "Columbia University";
+        this.connector.getUserData(Globals.email).subscribe(
+            data => {
+                this.yourSchool = data["school"];
+                this.yourPoints = data["universityPoints"];
+            }
+        )
         this.connector.getLeaderboard().subscribe(
             data => {
                 setTimeout(() => {
@@ -40,7 +47,7 @@ export class LeaderboardPage {
     }
 
     openCollege(college) {
-        const modal = this.modalCtrl.create(InnerSchoolLeaderboardPage, {"students": [{"rank": 1, "name": "John Smith", "score": "200"}, {"rank": 2, "name": "John Doe", "score": "150"}], "school": college});
+        const modal = this.modalCtrl.create(InnerSchoolLeaderboardPage,{"school": college});
         modal.present();
     }
     openYourCollege() {
@@ -56,7 +63,7 @@ export class LeaderboardPage {
         // console.log("Filter for:", substring);
         if(substring != "" && substring) {
             this.colleges = this.initialColleges.filter((item) => {
-                return (item["name"].toLowerCase().indexOf(substring.toLowerCase()) > -1);
+                return (item["school"].toLowerCase().indexOf(substring.toLowerCase()) > -1);
             })
         } else {
             this.colleges = this.initialColleges.slice(0);
