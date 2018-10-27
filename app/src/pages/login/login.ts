@@ -22,6 +22,7 @@ export class LoginPage {
   public login() {
     console.log("login()");
     this.connector.login(this.registerCredentials).subscribe(allowed => {
+      console.log(allowed);
       if (allowed) {        
         this.nav.setRoot(HomePage);
       } else {
