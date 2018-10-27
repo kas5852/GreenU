@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
  
 export class User {
   name: string;
@@ -19,23 +19,14 @@ export class User {
 export class Connector {
   currentUser: User;
 
-  constructor(private http:HttpClient)
-  {
-
-  }
+  constructor(private http:HttpClient) { }
  
   public login(credentials) {
     if (credentials.email === null || credentials.password === null) {
       return Observable.throw("Please enter both email and password.");
     } else {
-      var req = this.http.post('http://localhost:5000', credentials).subscribe(
-        res => {
-          console.log(res);
-        },
-        err => {
-          console.log("Error occured");
-        }
-      );
+      console.log(credentials);
+      return this.http.post('http://localhost:5000/dashboard', credentials).source;
     }
 }
  
@@ -43,12 +34,15 @@ export class Connector {
     if (credentials.email === null || credentials.password === null || credentials.name == null || credentials.school) {
       return Observable.throw("Please enter both email and password.");
     } else {
-      var req = this.http.post('http://localhost:5000', credentials).subscribe(
+      this.http.post('http://localhost:5000/register', credentials).subscribe(
         res => {
           console.log(res);
         },
-        err => {
-          console.log("Error occured");
+        (err: HttpErrorResponse) => {
+          console.log(err.error);
+          console.log(err.name);
+          console.log(err.message);
+          console.log(err.status);
         }
       );
     }
