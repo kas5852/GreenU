@@ -92,8 +92,8 @@ def login():
 
 		                dictionaryList.append(dictionary)
 
-		            d1 = {'totalPoints': totalPoints}
-		            d2 = {'items': json.dumps(dictionaryList)}
+		            d1 = {'totalPoints': str(totalPoints)}
+		            d2 = {'items': (dictionaryList)}
 		            d3 = {'school': school}
 
 		            returnJSON.update(d1)
@@ -103,7 +103,7 @@ def login():
 		            return jsonify(returnJSON)
 
 		        else:
-		            d1 = {'totalPoints': 0}
+		            d1 = {'totalPoints': str(0)}
 		            d3 = {'school': school}
 		            returnJSON.update(d1)
 		            returnJSON.update({})
@@ -117,7 +117,31 @@ def login():
 		    return "Invalid Username"
 
 
-# @app.route('/register', methods=['GET', 'POST'])
+@app.route('/leaderboard', methods=['GET', 'POST'])
+def leaderboard():
+	mydb = sqlite3.connect('CodeForGood.db')
+	cursor = mydb.cursor()
+	#list of dictionaries to return 
+	dictionaryList = []
+	#the return will go into here
+	returnJSON = {}
+	
+	if request.method == 'POST':
+		cursor.execute('SELECT sum(points) as score, school from students group by school order by score desc')
+		query = cursor.fetchall()
+		for school in query: 
+			dictionary = {}
+			d1 = {'score': school[0]}
+			d2 = {'school': school[1]}
+			dictionary.update(d1)
+			dictionary.update(d2)
+			dictionaryList.append(dictionary)
+
+		returnJSON.update(json.dumps(dictionaryList))
+		return jsonify(returnJSON)
+
+
+
 
 
 app.run(debug=True)
