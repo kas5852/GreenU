@@ -4,6 +4,6 @@ Hi
 wasssup
 hey
 
-###Frontend
+### Frontend
 - Written in Ionic-Angular
 - Tabbed application with login, dashboard, and leaderboard
