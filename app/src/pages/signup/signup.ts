@@ -13,7 +13,7 @@ export class SignupPage {
   registerCredentials = { email: '', password: '', school: '', name: ''};
  
   constructor(private nav: NavController, private connector: Connector, private alertCtrl: AlertController) {
-    this.schools = ['Columbia University', 'Stevens Institute of Technology', 'University of Maryland College Park', 'University of Texas at Austin'];
+    this.schools = ['Columbia University', 'Stevens Institute of Technology', 'University of Maryland', 'University of Texas at Austin'];
    }
  
   public register() {

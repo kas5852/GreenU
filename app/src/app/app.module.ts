@@ -23,6 +23,7 @@ import { Connector } from '../providers/connector/connector';
     BasePage,
     TaskModalPage,
     SignupPage,
+    LoginPage,
     LeaderboardPage,
     RegionPopoverPage,
     InnerSchoolLeaderboardPage
@@ -39,6 +40,7 @@ import { Connector } from '../providers/connector/connector';
     BasePage,
     TaskModalPage,
     SignupPage,
+    LoginPage,
     LeaderboardPage,
     RegionPopoverPage,
     InnerSchoolLeaderboardPage
@@ -46,8 +48,8 @@ import { Connector } from '../providers/connector/connector';
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
-    Connector
+    Connector,
+    {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
 export class AppModule {}

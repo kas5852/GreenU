@@ -4,8 +4,8 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { HomePage } from "../pages/home/home";
-import { SignupPage } from "../pages/signup/signup"
 import { Storage } from '@ionic/storage';
+import { LoginPage } from '../pages/login/login';
 
 @Component({
   templateUrl: 'app.html'
@@ -19,7 +19,7 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
 
       storage.get('login:status').then(loggedIn => {
-        this.rootPage = loggedIn ? HomePage : SignupPage;
+        this.rootPage = loggedIn ? HomePage : LoginPage;
       });
 
       statusBar.styleDefault();
