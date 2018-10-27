@@ -1,4 +1,4 @@
-# Green U
+# GreenU
 
 A college student's eco friendly platform
 
