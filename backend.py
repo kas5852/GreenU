@@ -31,6 +31,7 @@ def register():
 			returnJSON.update(d1)
 			returnJSON.update(d2)
 			returnJSON.update(d3)
+			mydb.commit()
 			return jsonify(returnJSON)
 
 
