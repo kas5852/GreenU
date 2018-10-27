@@ -234,6 +234,37 @@ def suggestions():
     return json.dumps(all_tasks[0:6])
 
 
+@app.route('/level', methods=['POST'])
+def levelUp():
+	mydb = sqlite3.connect('CodeForGood.db')
+	cursor = mydb.cursor()
+	dictionaryList = []
+	dictionary = {}
+	if request.method == 'POST':
+		user = request.json 
+		email = user['email']
+
+		cursor.execute("SELECT LEVEL, NAME FROM STUDENTS WHERE EMAIL = ?", (email,))
+		query = cursor.fetchone()
+		name = query[1]
+		level = query[0]
+
+		d1 = {'level': level}
+		d2 = {'name': name}
+		dictionary.update(d1)
+		dictionary.update(d2)
+		dictionaryList.append(dictionary)
+		return jsonify(dictionaryList)
+
+	else: 
+		return("Boo")
+
+
+
+
+
+
+
 app.run(debug=True)
 
 
