@@ -20,7 +20,9 @@ export class LoginPage {
     this.nav.push(SignupPage);
   }
  
+  showSpinner = false;
   public login() {
+    this.showSpinner = true;
     this.connector.login(this.registerCredentials).subscribe(resp => {
       console.log(resp);
       if (resp) {        
@@ -29,9 +31,11 @@ export class LoginPage {
       } else {
         this.showError("Access Denied");
       }
+      this.showSpinner = false;
     },
       error => {
         this.showError(error);
+        this.showSpinner = false;
       });
   }
  
