@@ -55,13 +55,14 @@ def login():
 
     		# gets student ID, total points and school name
 
-		    cursor.execute("SELECT ID, POINTS, SCHOOL FROM STUDENTS WHERE EMAIL = ?", (email,))
+		    cursor.execute("SELECT ID, POINTS, SCHOOL,NAME FROM STUDENTS WHERE EMAIL = ?", (email,))
 		    query = cursor.fetchone()
 		    if query:
 
 		        studentID = query[0]
 		        totalPoints = query[1]
 		        school = query[2]
+		        name = query[3]
 		        tasks = []
 
 		        # gets the tasks done by student & points
@@ -95,10 +96,12 @@ def login():
 		            d1 = {'totalPoints': str(totalPoints)}
 		            d2 = {'items': (dictionaryList)}
 		            d3 = {'school': school}
+		            d4 = {'name': name}
 
 		            returnJSON.update(d1)
 		            returnJSON.update(d2)
 		            returnJSON.update(d3)
+		            returnJSON.update(d4)
 
 		            return jsonify(returnJSON)
 
@@ -137,8 +140,10 @@ def leaderboard():
 			dictionary.update(d2)
 			dictionaryList.append(dictionary)
 
-		returnJSON.update(json.dumps(dictionaryList))
-		return jsonify(returnJSON)
+		for dictate in dictionaryList:
+			returnJSON.update(dictate)
+		
+		return jsonify(dictionaryList)
 
 
 
