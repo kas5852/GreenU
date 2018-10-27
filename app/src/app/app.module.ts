@@ -10,6 +10,9 @@ import { HomePage } from "../pages/home/home";
 import { BasePage } from "../pages/base/base";
 import { TaskModalPage } from "../pages/task-modal/task-modal";
 import { SignupPage } from '../pages/signup/signup';
+import { LeaderboardPage } from "../pages/leaderboard/leaderboard";
+import { RegionPopoverPage } from "../pages/region-popover/region-popover";
+import { InnerSchoolLeaderboardPage } from "../pages/inner-school-leaderboard/inner-school-leaderboard";
 
 @NgModule({
   declarations: [
@@ -17,7 +20,10 @@ import { SignupPage } from '../pages/signup/signup';
     HomePage,
     BasePage,
     TaskModalPage,
-    SignupPage
+    SignupPage,
+    LeaderboardPage,
+    RegionPopoverPage,
+    InnerSchoolLeaderboardPage
   ],
   imports: [
     BrowserModule,
@@ -30,7 +36,10 @@ import { SignupPage } from '../pages/signup/signup';
     HomePage,
     BasePage,
     TaskModalPage,
-    SignupPage
+    SignupPage,
+    LeaderboardPage,
+    RegionPopoverPage,
+    InnerSchoolLeaderboardPage
   ],
   providers: [
     StatusBar,
