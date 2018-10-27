@@ -28,6 +28,25 @@ export class Connector {
   currentUser = null;
   constructor(private http:HttpClient) { }
 
+  public addTask(email, keyword) {
+    return this.http.post("http://localhost:5000/addTask", {"email": email, "keyword": keyword}).map(
+      resp => {
+        return resp;
+      }
+    )
+  }
+
+  public getTaskList() {
+    return this.http.get("http://localhost:5000/task").map(
+      response => {
+        let tasks = [];
+        for(const key of Object.keys(response)) {
+          tasks.push(response[key]);
+        }
+        return tasks;
+      }
+    )
+  }
   public getUserData(email) {
     return this.http.post("http://localhost:5000/dashboard", {"email": email}).map(
       resp => {

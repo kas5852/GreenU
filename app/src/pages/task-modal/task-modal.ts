@@ -15,7 +15,10 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
 })
 export class TaskModalPage {
 
+    defaultTasks: any[] = [];
     constructor(public navCtrl: NavController, public navParams: NavParams, private view: ViewController) {
+        this.defaultTasks = navParams.get("tasks");
+        console.log(this.defaultTasks);
         this.tasks = this.getAllTasks();
     }
 
@@ -38,21 +41,7 @@ export class TaskModalPage {
         this.view.dismiss(task);
     }
     getAllTasks() {
-        const tasks = [
-            {
-                "itemID": "Recycle Drinks",
-                "itemPoint": "5"
-            },
-            {
-                "itemID": "Ride Bike to Work",
-                "itemPoint": "15"
-            },
-            {
-                "itemID": "Walk to Work",
-                "itemPoint": "20"
-            }
-        ];
-        return tasks;
+        return this.defaultTasks.slice(0);
     }
     tasks: any[];
 
