@@ -231,7 +231,7 @@ def suggestions():
     cursor.execute("SELECT KEYWORD, TASKDESC, POINTVALUE FROM Suggestions")
     all_tasks = cursor.fetchall()
     random.shuffle(all_tasks)
-    return json.dumps(all_tasks[0:6])
+    return jsonify(all_tasks[0:6])
 
 
 @app.route('/level', methods=['POST'])
@@ -260,7 +260,28 @@ def levelUp():
 		return("Boo")
 
 
+@app.route('/task')
+def task():
+	mydb = sqlite3.connect('CodeForGood.db')
+	cursor = mydb.cursor()
+	dictionaryList = []
+	dictionary = {}
+	if request.method == 'GET':
+		cursor.execute('SELECT KEYWORD, TASKDESC, POINTVALUE FROM TASKSIDS')
+		query = cursor.fetchall()
 
+		for student in query: 
+			dictionary = {}
+			d1 = {'keyword': student[0]}
+			d2 = {'taskdesc': student[1]}
+			d3 = {'points': student[2]}
+
+			dictionary.update(d1)
+			dictionary.update(d2)
+			dictionary.update(d3)
+			dictionaryList.append(dictionary)
+
+		return jsonify(dictionaryList)
 
 
 
