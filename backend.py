@@ -10,45 +10,24 @@ mydb = sqlite3.connect('CodeForGood.db')
 cursor = mydb.cursor()
 app = Flask(__name__)
 
-
-<<<<<<< HEAD
-def register():
-	returnJSON = {}
-	if request.method == 'POST':
-		user = request.json
-		email = user['email']
-		name = user['name']
-		school = user['school']
-		cursor.execute('SELECT (%s) FROM STUDENTS', username)
-
-		if cursor.fetch():
-			return "User already exist :("
-		else:
-			cursor.execute('INSERT INTO STUDENTS (ID, EMAIL, NAME, SCHOOL, POINTS) VALUES (NULL, (%s), (%s), (%s), '0')', email, name, school)
-			retunJSON.update('totalPoints' = 0)
-			retunJSON.update('items' = None)
-			returnJSON.update('school' = school)
-			return returnJSON
-
-
-=======
 # def register():
 # 	returnJSON = {}
 # 	if request.method == 'POST':
 # 		user = request.json
-# 		username = user['username']
+# 		email = user['email']
+# 		name = user['name']
 # 		school = user['school']
 # 		cursor.execute('SELECT (%s) FROM STUDENTS', username)
->>>>>>> 4b3ea14d6acd885bd0ce1adc42a98f84b9826778
 
 # 		if cursor.fetch():
 # 			return "User already exist :("
 # 		else:
-# 			cursor.execute('INSERT INTO STUDENTS (ID, USERNAME, SCHOOL, POINTS) VALUES (NULL, (%s), (%s), '0')', username, school)
+# 			cursor.execute('INSERT INTO STUDENTS (ID, EMAIL, NAME, SCHOOL, POINTS) VALUES (NULL, (%s), (%s), (%s), '0')', email, name, school)
 # 			retunJSON.update('totalPoints' = 0)
 # 			retunJSON.update('items' = None)
 # 			returnJSON.update('school' = school)
 # 			return returnJSON
+
 
 
 @app.route('/dashboard', methods=['GET', 'POST'])
@@ -68,7 +47,7 @@ def login():
 
     		# gets student ID, total points and school name
 
-		    cursor.execute("SELECT ID, POINTS, SCHOOL FROM STUDENTS WHERE USERNAME = ?", (name,))
+		    cursor.execute("SELECT ID, POINTS, SCHOOL FROM STUDENTS WHERE NAME = ?", (name,))
 		    query = cursor.fetchone()
 		    if query:
 
@@ -91,14 +70,14 @@ def login():
 		                # the dictionaries that will be turned into jsons
 		                dictionary = {}
 		                # this will give name of the thing
-		                item = keywords[counter]
+		                item = keywords[counter][0]
 		                # this will give description of item
-		                itemDescrip = task[0]
+		                itemDescrip = task[0][0]
 		                # this will add to return dictionary
 
 		                d1 = {'itemID': item}
 		                d2 = {'itemDescrip': itemDescrip}
-		                d3 = {'itemPoint': tasks[0][0]}
+		                d3 = {'itemPoint': task[0][1]}
 		                dictionary.update(d1)
 		                dictionary.update(d2)
 		                dictionary.update(d3)
