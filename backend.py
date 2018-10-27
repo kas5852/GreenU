@@ -184,7 +184,7 @@ def add():
             school = query[2]
 
             cursor.execute('INSERT INTO STUDENTTASKS (ID, KEYWORD) VALUES (?,?)', (studentID, keyword,))
-            cursor.execute('UPDATE STUDENTS SET POINTS = ? WHERE ID = studentID', (totalPoints,))
+            cursor.execute('UPDATE STUDENTS SET POINTS = ? WHERE ID =?', (totalPoints,studentID))
             d1 = {'totalPoints': totalPoints}
             d2 = {'items': keyword}
             d3 = {'school': school}
@@ -222,6 +222,7 @@ def getUni():
             dictionaryList.append(dictionary)
 
         return jsonify(dictionaryList)
+
 
 @app.route('/suggestions', methods=['POST'])
 def suggestions():
