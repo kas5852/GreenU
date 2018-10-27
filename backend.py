@@ -140,8 +140,8 @@ def leaderboard():
 			dictionary.update(d2)
 			dictionaryList.append(dictionary)
 
-		for dictate in dictionaryList:
-			returnJSON.update(dictate)
+		# for dictate in dictionaryList:
+		# 	returnJSON.update(dictate)
 		
 		return jsonify(dictionaryList)
 
@@ -171,7 +171,7 @@ def add():
 			school = query[2]
 
 			cursor.execute('INSERT INTO STUDENTTASKS (ID, KEYWORD) VALUES (?,?)', (studentID, keyword,))
-			cursor.execute('UPDATE STUDENTS SET POINTS = ?', (totalPoints,))
+			cursor.execute('UPDATE STUDENTS SET POINTS = ? WHERE ID = studentID', (totalPoints,))
 			d1 = {'totalPoints': totalPoints}
 			d2 = {'items': keyword}
 			d3 = {'school': school}
@@ -186,6 +186,29 @@ def add():
 			
 
 
+@app.route('/getUni', methods=['GET', 'POST'])
+def getUni():
+	mydb = sqlite3.connect('CodeForGood.db')
+	cursor = mydb.cursor()
+	returnJSON = {}
+	dictionaryList = []
+	if request.method == 'POST':
+		user = request.json
+		school = user['school']
+
+		cursor.execute('SELECT ID, NAME, POINTS FROM STUDENTS WHERE SCHOOL = ?',(school,))
+		query = cursor.fetchall()
+
+		for student in query: 
+			dictionary = {}
+			d1 = {'score': student[2]}
+			d2 = {'name': student[1]}
+			d3 = {'student': student[0]}
+			dictionary.update(d1)
+			dictionary.update(d2)
+			dictionaryList.append(dictionary)
+
+		return jsonify(dictionaryList)
 
 
 app.run(debug=True)
