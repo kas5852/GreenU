@@ -18,6 +18,10 @@ export class BasePage {
 
     constructor(public navCtrl: NavController, public navParams: NavParams, private modalCtrl: ModalController) {
         this.completedTasks = [];
+        this.name = "Nahum Getachew";
+        this.university = "Columbia University";
+        this.points = 1000;
+        this.universityPoints = 100000;
     }
 
     ionViewDidLoad() {
@@ -36,4 +40,8 @@ export class BasePage {
         modal.present();
     }
     completedTasks: any[];
+    name: string;
+    university: string;
+    points: any;
+    universityPoints: any;
 }

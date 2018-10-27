@@ -6,24 +6,25 @@
         </button>
     </ion-fab>
     <ion-card>
+        <ion-card-header>Hi {{name}}</ion-card-header>
+        <ion-card-content>
+            You have {{points}} points.<br>
+            {{university}} has {{universityPoints}} points.
+        </ion-card-content>
+        <ion-card-header>Today you have:</ion-card-header>
+        <ion-list>
+            <ion-item *ngFor="let task of completedTasks">
+                {{task}}
+            </ion-item>
+        </ion-list>
+    </ion-card>
+    <ion-card>
         <ion-card-header>
-            Uncompleted Tasks
+            Suggestions:
         </ion-card-header>
         <ion-card-content>
             <ion-list>
                 <ion-item *ngFor="let task of uncompletedTasks">
-                    {{task}}
-                </ion-item>
-            </ion-list>
-        </ion-card-content>
-    </ion-card>
-    <ion-card>
-        <ion-card-header>
-            Completed Tasks
-        </ion-card-header>
-        <ion-card-content>
-            <ion-list>
-                <ion-item *ngFor="let task of completedTasks">
                     {{task}}
                 </ion-item>
             </ion-list>
