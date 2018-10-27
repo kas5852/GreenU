@@ -63,7 +63,7 @@ export class BasePage {
     points: number;
     universityPoints: any;
     addSuggestion(task) {
-        const obj = {"keyword": task[0], "points": task[2]};
+        const obj = {"keyword": Globals.suggestionMap[task[0]], "points": task[2]};
         this.completedTasks.push(obj);
         this.points += Number(obj.points);
         this.universityPoints += Number(obj.points);
