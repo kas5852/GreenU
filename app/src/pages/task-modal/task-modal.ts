@@ -31,7 +31,7 @@ export class TaskModalPage {
         // console.log("Filter for:", substring);
         if(substring != "" && substring) {
             this.tasks = this.getAllTasks().filter((item) => {
-                return (item["name"].toLowerCase().indexOf(substring.toLowerCase()) > -1);
+                return (item["keyword"].toLowerCase().indexOf(substring.toLowerCase()) > -1);
             })
         } else {
             this.tasks = this.getAllTasks();
