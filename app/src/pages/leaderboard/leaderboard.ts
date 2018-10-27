@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, PopoverController, ModalController } from 'ionic-angular';
 import { InnerSchoolLeaderboardPage } from "../inner-school-leaderboard/inner-school-leaderboard";
+import { Connector } from '../../providers/connector/connector' 
+import { Globals } from "../../Globals";
 
 /**
  * Generated class for the LeaderboardPage page.
@@ -17,35 +19,35 @@ import { InnerSchoolLeaderboardPage } from "../inner-school-leaderboard/inner-sc
 export class LeaderboardPage {
 
     title: any;
-    yourSchool: any;
+    yourSchool: any = "Error, Data hasn't been loaded yet";
     colleges: any[];
-    constructor(public navCtrl: NavController, public navParams: NavParams, private modalCtrl: ModalController) {
+    initialColleges: any[] = [];
+    showSpinner = true;
+    yourPoints: any;
+    constructor(public navCtrl: NavController, public navParams: NavParams, private modalCtrl: ModalController, private connector: Connector) {
         this.title = "Leaderboard";
-        this.yourSchool = "Columbia University";
-        this.colleges = this.getColleges();
-    }
-    getColleges() {
-        return [
-            {
-                "rank": 1,
-                "name": "Columbia University",
-                "score": "20,000"
-            },
-            {
-                "rank": 2,
-                "name": "University of Texas at Austin",
-                "score": "15,000"
-            },
-            {
-                "rank": 3,
-                "name": "Stevens Institute of Technology",
-                "score": "1,000"
+        this.connector.getUserData(Globals.email).subscribe(
+            data => {
+                this.yourSchool = data["school"];
+                this.yourPoints = data["universityPoints"];
             }
-        ];
+        )
+        this.connector.getLeaderboard().subscribe(
+            data => {
+                setTimeout(() => {
+                    for(const key of Object.keys(data)) {
+                        data[key]["rank"] = Number(key) + 1;
+                        this.initialColleges.push(data[key]);
+                    }
+                    this.colleges = this.initialColleges.slice(0);
+                    this.showSpinner = false;
+                }, 1000);
+            }
+        );
     }
 
     openCollege(college) {
-        const modal = this.modalCtrl.create(InnerSchoolLeaderboardPage, {"students": [{"rank": 1, "name": "John Smith", "score": "200"}, {"rank": 2, "name": "John Doe", "score": "150"}], "school": college});
+        const modal = this.modalCtrl.create(InnerSchoolLeaderboardPage,{"school": college});
         modal.present();
     }
     openYourCollege() {
@@ -60,11 +62,11 @@ export class LeaderboardPage {
         let substring = event.target.value;
         // console.log("Filter for:", substring);
         if(substring != "" && substring) {
-            this.colleges = this.getColleges().filter((item) => {
-                return (item["name"].toLowerCase().indexOf(substring.toLowerCase()) > -1);
+            this.colleges = this.initialColleges.filter((item) => {
+                return (item["school"].toLowerCase().indexOf(substring.toLowerCase()) > -1);
             })
         } else {
-            this.colleges = this.getColleges();
+            this.colleges = this.initialColleges.slice(0);
         }
     }
 }

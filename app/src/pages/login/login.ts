@@ -3,6 +3,7 @@ import { NavController, AlertController, LoadingController, Loading, IonicPage }
 import { Connector } from '../../providers/connector/connector' 
 import { SignupPage } from '../signup/signup'
 import { HomePage } from '../home/home';
+import { Globals } from "../../Globals";
 
 @IonicPage()
 @Component({
@@ -23,6 +24,7 @@ export class LoginPage {
     this.connector.login(this.registerCredentials).subscribe(resp => {
       console.log(resp);
       if (resp) {        
+        Globals.email = this.registerCredentials.email;
         this.nav.setRoot(HomePage);
       } else {
         this.showError("Access Denied");
