@@ -48,14 +48,14 @@ def login():
 	if request.method == 'POST':
 		
 		user = request.json 
-		username = user['username']
-		cursor.execute('SELECT ? FROM STUDENTS', (username,))
+		email = user['email']
+		cursor.execute('SELECT ? FROM STUDENTS', (email,))
 
 		if cursor.fetchone():
 
     		# gets student ID, total points and school name
 
-		    cursor.execute("SELECT ID, POINTS, SCHOOL FROM STUDENTS WHERE NAME = ?", (name,))
+		    cursor.execute("SELECT ID, POINTS, SCHOOL FROM STUDENTS WHERE EMAIL = ?", (email,))
 		    query = cursor.fetchone()
 		    if query:
 
@@ -115,6 +115,9 @@ def login():
 
 		else:
 		    return "Invalid Username"
+
+
+@app.route('/register', methods=['GET', 'POST'])
 
 
 app.run()
