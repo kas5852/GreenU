@@ -18,6 +18,7 @@ def register():
 		name = user['name']
 		school = user['school']
 
+		cursor.execute('SELECT (%s) FROM STUDENTS', email)
 		if cursor.fetch():
 			return "User already exist :("
 		else:
