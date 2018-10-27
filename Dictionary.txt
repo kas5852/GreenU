@@ -12,7 +12,7 @@ thisdict =	{
   11: "Driving hybrid cars",
   12: "Biking to destinations",
   13: "Walking to destinations",
-  14: "Using bikes",
+  14: "Using electric bikes",
   15: "Installing rooftop solar panals",
   16: "Using energy efficient lighting in households",
   17: "Using water saving devices in homes such as low-flow showerheads",
