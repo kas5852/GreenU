@@ -46,7 +46,13 @@ def register():
 		user = request.json
 		username = user['username']
 		school = user['school']
-		
+		cursor.execute('SELECT (%s) FROM STUDENTS', username)
+
+		if cursor.fetch():
+			return "User already exist :("
+		else:
+			cursor.execute('INSERT INTO STUDENTS (ID, USERNAME, SCHOOL, POINTS) VALUES (NULL, (%s), (%s), '0')', username, school)
+
 
 
 
