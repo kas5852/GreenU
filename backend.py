@@ -42,6 +42,8 @@ app = Flask(__name__)
 
 def register():
 
+	returnJSON = {}
+
 	if request.method == 'POST':
 		user = request.json
 		username = user['username']
@@ -52,6 +54,10 @@ def register():
 			return "User already exist :("
 		else:
 			cursor.execute('INSERT INTO STUDENTS (ID, USERNAME, SCHOOL, POINTS) VALUES (NULL, (%s), (%s), '0')', username, school)
+			retunJSON.update('totalPoints' = 0)
+			retunJSON.update('items' = None)
+			returnJSON.update('school' = school)
+			return returnJSON
 
 
 
