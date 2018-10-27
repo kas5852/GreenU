@@ -28,17 +28,30 @@ export class TaskModalPage {
         // console.log("Filter for:", substring);
         if(substring != "" && substring) {
             this.tasks = this.getAllTasks().filter((item) => {
-                return (item.toLowerCase().indexOf(substring.toLowerCase()) > -1);
+                return (item["name"].toLowerCase().indexOf(substring.toLowerCase()) > -1);
             })
         } else {
             this.tasks = this.getAllTasks();
         }
     }
-    selectTask(taskName) {
-        this.view.dismiss(taskName);
+    selectTask(task) {
+        this.view.dismiss(task);
     }
     getAllTasks() {
-        const tasks = ["Recycle Milk Cartons", "Ride Bike to Work", "Use Reusable Water Bottle", "Walk to Work"];
+        const tasks = [
+            {
+                "name": "Recycle Drinks",
+                "score": "5"
+            },
+            {
+                "name": "Ride Bike to Work",
+                "score": "15"
+            },
+            {
+                "name": "Walk to Work",
+                "score": "20"
+            }
+        ];
         return tasks;
     }
     tasks: any[];

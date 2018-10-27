@@ -5,42 +5,13 @@ import sqlite3
 
 
 
-# thisdict =	{
-#   1: "Minimizing food loss and wastage",
-#   2: "Eating more plant-based foods and fewer animal proteinsand products",
-#   3: "Composting Converting biodegradable waste",
-#   4: "Adding trees",
-#   5: "Regenerative agriculture practice",
-#   6: "Restoring degraded, abandoned farmland",
-#   7: "Driving Eletric Vehicle",
-#   8: "Using ride-sharing services",
-#   9: "Using Public Transportation", 
-#   10: "Using video-conferencing technologies in place ofcommercial flights",
-#   11: "Driving hybrid cars",
-#   12: "Biking to destinations",
-#   13: "Walking to destinations",
-#   14: "Using electric bikes",
-#   15: "Installing rooftop solar panals",
-#   16: "Using energy efficient lighting in households",
-#   17: "Using water saving devices in homes such as low-flow showerheads",
-#   18: "Using smart thermostats",
-#   19: "Household recycling",
-#   20: "Turn off lights when leaving home",
-#   21: "Recylce Waste"
-#   22: "Use Reusable Bags"
-#   23: "Turn off faucet while washing teeth",
-#   24: "Use reuseable water bottle"
-#   25: "Use Rechargeable batteries"
-#   26: "Wash clothes with cold water"
-# }
-
-
 
 mydb = sqlite3.connect('CodeForGood.db')
 cursor = mydb.cursor()
 app = Flask(__name__)
 
 
+<<<<<<< HEAD
 def register():
 	returnJSON = {}
 	if request.method == 'POST':
@@ -60,7 +31,24 @@ def register():
 			return returnJSON
 
 
+=======
+# def register():
+# 	returnJSON = {}
+# 	if request.method == 'POST':
+# 		user = request.json
+# 		username = user['username']
+# 		school = user['school']
+# 		cursor.execute('SELECT (%s) FROM STUDENTS', username)
+>>>>>>> 4b3ea14d6acd885bd0ce1adc42a98f84b9826778
 
+# 		if cursor.fetch():
+# 			return "User already exist :("
+# 		else:
+# 			cursor.execute('INSERT INTO STUDENTS (ID, USERNAME, SCHOOL, POINTS) VALUES (NULL, (%s), (%s), '0')', username, school)
+# 			retunJSON.update('totalPoints' = 0)
+# 			retunJSON.update('items' = None)
+# 			returnJSON.update('school' = school)
+# 			return returnJSON
 
 
 @app.route('/dashboard', methods=['GET', 'POST'])
@@ -77,73 +65,69 @@ def login():
 		cursor.execute('SELECT (%s) FROM STUDENTS', username)
 
 		if cursor.fetchone():
-			
-			#gets student ID, total points and school name
-			cursor.execute('SELECT ID, POINTS, SCHOOL FROM STUDENTS WHERE USERNAME = (%s)',username)
-			if cursor.fetchone():	
-				query = cursor.fetchone()
-				studentID = query[0]
-				totalPoints = query[1]
-				school = query[2]
-				tasks = []
 
-				#gets the tasks done by student & points 
-				cursor.execute('SELECT KEYWORD FROM STUDENTTASK WHERE ID = (%s)', studentID)
-				if cursor.fetchone():	
-					keywords = cursor.fetch()
+    		# gets student ID, total points and school name
 
-					for word in keywords:
-						cursor.execute('SELECT TASKDESCRIP, TASKPOINT FROM STUDENTTASK WHERE KEYWORD = (%s)',word)
-						tasks.append(cursor.fetchone())
+		    cursor.execute("SELECT ID, POINTS, SCHOOL FROM STUDENTS WHERE USERNAME = ?", (name,))
+		    query = cursor.fetchone()
+		    if query:
 
-					
-					for counter,task in enumerate(tasks):
-						#the dictionaries that will be turned into jsons
-						dictionary = {}
-						#this will give name of the thing
-						item = keywords[counter]
-						#this will give description of item
-						itemDescrip = task[0]
-						#this will add to return dictionary 
-						
-						d1 = {'itemID': item}
-						d2 = {'itemDescrip': itemDescrip}
-						d3 = {'itemPoint': tasks[1]}
-						dictionary.update(d1)
-						dictionary.update(d2)
-						dictionary.update(d3)
+		        studentID = query[0]
+		        totalPoints = query[1]
+		        school = query[2]
+		        tasks = []
 
-						dictionaryList.append(dictionary)
+		        # gets the tasks done by student & points
+		        cursor.execute("SELECT KEYWORD FROM STUDENTTASKS WHERE ID = ?", (studentID,))
+		        keywords = cursor.fetchall()
+		        if keywords:
 
-					d1 = {'totalPoints' : totalPoints}
-					d2 = {'items' : json.dumps(dictionaryList)}
-					d3 = {'school': school}
-					
-					returnJSON.update(d1)
-					returnJSON.update(d2)
-					returnJSON.update(d3)
 
-					return returnJSON
+		            for word in keywords:
+		                cursor.execute("SELECT TASKDESC, POINTVALUE FROM TASKSIDS WHERE KEYWORD = ?", (word[0],))
+		                tasks.append(cursor.fetchall())
 
-				else: 
-					d1 = {'totalPoints' : 0}
-					d3 = {'school': school}
-					returnJSON.update(d1)
-					returnJSON.update({})
-					returnJSON.update(d3)
-					return returnJSON
+		            for counter, task in enumerate(tasks):
+		                # the dictionaries that will be turned into jsons
+		                dictionary = {}
+		                # this will give name of the thing
+		                item = keywords[counter]
+		                # this will give description of item
+		                itemDescrip = task[0]
+		                # this will add to return dictionary
 
-			else: 
-				return("Student info was empty for some reason")
+		                d1 = {'itemID': item}
+		                d2 = {'itemDescrip': itemDescrip}
+		                d3 = {'itemPoint': tasks[0][0]}
+		                dictionary.update(d1)
+		                dictionary.update(d2)
+		                dictionary.update(d3)
+
+		                dictionaryList.append(dictionary)
+
+		            d1 = {'totalPoints': totalPoints}
+		            d2 = {'items': json.dumps(dictionaryList)}
+		            d3 = {'school': school}
+
+		            returnJSON.update(d1)
+		            returnJSON.update(d2)
+		            returnJSON.update(d3)
+
+		            print(returnJSON)
+
+		        else:
+		            d1 = {'totalPoints': 0}
+		            d3 = {'school': school}
+		            returnJSON.update(d1)
+		            returnJSON.update({})
+		            returnJSON.update(d3)
+		            print(returnJSON)
+
+		    else:
+		        print("Student info was empty for some reason")
 
 		else:
-			return("Invalid Username")
-
-
-
-
-# @app.route('/leaderboard', methods=['GET', 'POST'])
-# def leaderboard():
+		    print("Invalid Username")
 
 
 app.run()

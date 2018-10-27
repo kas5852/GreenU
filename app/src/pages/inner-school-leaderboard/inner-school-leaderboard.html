@@ -17,10 +17,10 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding class="leaderboardContent">
     <ion-searchbar (ionInput)="filterStudents($event)"></ion-searchbar>
     <ion-list>
-        <ion-item *ngFor="let student of students">
+        <ion-item *ngFor="let student of students" class="students">
             <ion-note item-start>
                 {{student.rank}}
             </ion-note>

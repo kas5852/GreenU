@@ -19,7 +19,7 @@ export class LeaderboardPage {
     title: any;
     yourSchool: any;
     colleges: any[];
-    constructor(public navCtrl: NavController, public navParams: NavParams, private popCtrl: PopoverController, private modalCtrl: ModalController) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, private modalCtrl: ModalController) {
         this.title = "Leaderboard";
         this.yourSchool = "Columbia University";
         this.colleges = this.getColleges();
@@ -44,9 +44,12 @@ export class LeaderboardPage {
         ];
     }
 
-    openCollege() {
-        const modal = this.modalCtrl.create(InnerSchoolLeaderboardPage, {"students": [{"rank": 1, "name": "John Smith", "score": "200"}, {"rank": 2, "name": "John Doe", "score": "150"}], "school": this.yourSchool});
+    openCollege(college) {
+        const modal = this.modalCtrl.create(InnerSchoolLeaderboardPage, {"students": [{"rank": 1, "name": "John Smith", "score": "200"}, {"rank": 2, "name": "John Doe", "score": "150"}], "school": college});
         modal.present();
+    }
+    openYourCollege() {
+        this.openCollege(this.yourSchool);
     }
 
     ionViewDidLoad() {

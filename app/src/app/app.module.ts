@@ -9,10 +9,12 @@ import { MyApp } from './app.component';
 import { HomePage } from "../pages/home/home";
 import { BasePage } from "../pages/base/base";
 import { TaskModalPage } from "../pages/task-modal/task-modal";
+import { LoginPage } from '../pages/login/login';
 import { SignupPage } from '../pages/signup/signup';
 import { LeaderboardPage } from "../pages/leaderboard/leaderboard";
 import { RegionPopoverPage } from "../pages/region-popover/region-popover";
 import { InnerSchoolLeaderboardPage } from "../pages/inner-school-leaderboard/inner-school-leaderboard";
+import { Connector } from '../providers/connector/connector';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,8 @@ import { InnerSchoolLeaderboardPage } from "../pages/inner-school-leaderboard/in
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    Connector
   ]
 })
 export class AppModule {}
