@@ -21,8 +21,9 @@ export class LoginPage {
  
   public login() {
     console.log("login()");
-    this.connector.login(this.registerCredentials).subscribe(allowed => {
-      if (allowed) {        
+    this.connector.login(this.registerCredentials).subscribe(resp => {
+      console.log(resp);
+      if (resp) {        
         this.nav.setRoot(HomePage);
       } else {
         this.showError("Access Denied");

@@ -2,12 +2,10 @@ from flask import Flask, render_template, request, jsonify
 import json 
 # import mysql.connector
 import sqlite3 
-
-
-
-
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -21,6 +19,7 @@ def register():
 		school = user['school']
 
 		cursor.execute('SELECT EMAIL FROM STUDENTS WHERE email=?', (email,))
+
 		if cursor.fetchone():
 			return "User already exist :("
 		else:
@@ -31,6 +30,7 @@ def register():
 			returnJSON.update(d1)
 			returnJSON.update(d2)
 			returnJSON.update(d3)
+			mydb.commit()
 			return jsonify(returnJSON)
 
 
