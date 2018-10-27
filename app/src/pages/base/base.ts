@@ -29,7 +29,8 @@ export class BasePage {
         const modal = this.modalCtrl.create(TaskModalPage);
         modal.onDidDismiss(
             task => {
-                this.completedTasks.push(task);
+                if (task != null)
+                    this.completedTasks.push(task);
             }
         );
         modal.present();

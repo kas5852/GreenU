@@ -42,4 +42,8 @@ export class TaskModalPage {
         return tasks;
     }
     tasks: any[];
+
+    closeModel() {
+        this.navCtrl.pop();
+    }
 }
