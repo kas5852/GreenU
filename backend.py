@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 import sqlite3
 import json
+import random
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -157,66 +158,76 @@ def school():
 
 @app.route('/addTask', methods=['GET', 'POST'])
 def add():
-	mydb = sqlite3.connect('CodeForGood.db')
-	cursor = mydb.cursor()
-	returnJSON = {}
-	if request.method == 'POST':
-		
-		user = request.json
-		email = user['email']
-		
-		keyword = user['keyword']
+    mydb = sqlite3.connect('CodeForGood.db')
+    cursor = mydb.cursor()
+    returnJSON = {}
+    if request.method == 'POST':
+        
+        user = request.json
+        email = user['email']
+        
+        keyword = user['keyword']
 
-		cursor.execute('SELECT POINTVALUE FROM TASKSIDS WHERE KEYWORD=?', (keyword,))
-		value = cursor.fetchone()
+        cursor.execute('SELECT POINTVALUE FROM TASKSIDS WHERE KEYWORD=?', (keyword,))
+        value = cursor.fetchone()
 
-		if value:
+        if value:
 
-			cursor.execute('SELECT ID, POINTS, SCHOOL FROM STUDENTS WHERE EMAIL = ?', (email,))
-			query = cursor.fetchone()
-			studentID = query[0]
-			totalPoints = int(value[0]) + int(query[1])
-			school = query[2]
+            cursor.execute('SELECT ID, POINTS, SCHOOL FROM STUDENTS WHERE EMAIL = ?', (email,))
+            query = cursor.fetchone()
+            studentID = query[0]
+            totalPoints = int(value[0]) + int(query[1])
+            school = query[2]
 
-			cursor.execute('INSERT INTO STUDENTTASKS (ID, KEYWORD) VALUES (?,?)', (studentID, keyword,))
-			cursor.execute('UPDATE STUDENTS SET POINTS = ? WHERE ID = studentID', (totalPoints,))
-			d1 = {'totalPoints': totalPoints}
-			d2 = {'items': keyword}
-			d3 = {'school': school}
-			returnJSON.update(d1)
-			returnJSON.update(d2)
-			returnJSON.update(d3)
-			mydb.commit()
-			return jsonify(returnJSON)
-			
-		else:
-			return("wrong keyword")
-			
+            cursor.execute('INSERT INTO STUDENTTASKS (ID, KEYWORD) VALUES (?,?)', (studentID, keyword,))
+            cursor.execute('UPDATE STUDENTS SET POINTS = ? WHERE ID = studentID', (totalPoints,))
+            d1 = {'totalPoints': totalPoints}
+            d2 = {'items': keyword}
+            d3 = {'school': school}
+            returnJSON.update(d1)
+            returnJSON.update(d2)
+            returnJSON.update(d3)
+            mydb.commit()
+            return jsonify(returnJSON)
+            
+        else:
+            return("wrong keyword")
+            
 
 
 @app.route('/getUni', methods=['GET', 'POST'])
 def getUni():
-	mydb = sqlite3.connect('CodeForGood.db')
-	cursor = mydb.cursor()
-	returnJSON = {}
-	dictionaryList = []
-	if request.method == 'POST':
-		user = request.json
-		school = user['school']
+    mydb = sqlite3.connect('CodeForGood.db')
+    cursor = mydb.cursor()
+    returnJSON = {}
+    dictionaryList = []
+    if request.method == 'POST':
+        user = request.json
+        school = user['school']
 
-		cursor.execute('SELECT ID, NAME, POINTS FROM STUDENTS WHERE SCHOOL = ? order by points desc',(school,))
-		query = cursor.fetchall()
+        cursor.execute('SELECT ID, NAME, POINTS FROM STUDENTS WHERE SCHOOL = ? order by points desc',(school,))
+        query = cursor.fetchall()
 
-		for student in query: 
-			dictionary = {}
-			d1 = {'score': student[2]}
-			d2 = {'name': student[1]}
-			d3 = {'student': student[0]}
-			dictionary.update(d1)
-			dictionary.update(d2)
-			dictionaryList.append(dictionary)
+        for student in query: 
+            dictionary = {}
+            d1 = {'score': student[2]}
+            d2 = {'name': student[1]}
+            d3 = {'student': student[0]}
+            dictionary.update(d1)
+            dictionary.update(d2)
+            dictionaryList.append(dictionary)
 
-		return jsonify(dictionaryList)
+        return jsonify(dictionaryList)
+
+@app.route('/suggestions', methods=['POST'])
+def suggestions():
+    mydb = sqlite3.connect('CodeForGood.db')
+    cursor = mydb.cursor()
+    cursor.execute("SELECT KEYWORD, TASKDESC, POINTVALUE FROM Suggestions")
+    all_tasks = cursor.fetchall()
+    random.shuffle(all_tasks)
+    return json.dumps(all_tasks[0:6])
+
 
 app.run(debug=True)
 
