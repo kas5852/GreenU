@@ -1,0 +1,8 @@
+<ion-content>
+    <ion-searchbar (ionInput)="filterTasks($event)"></ion-searchbar>
+    <ion-list>
+        <button ion-item *ngFor="let task of tasks" (click)="selectTask(task)">
+            {{task}}
+        </button>
+    </ion-list>
+</ion-content>
