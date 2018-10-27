@@ -1,13 +1,22 @@
-page-signup {
+page-login {
+ 
     .login-content {
       background: #56CA96;
    
+      .logo-row {
+        padding-top: 50px;
+        padding-bottom: 20px;
+      }
+   
       .login-box {
-        background: #509287;
+        background: #399F8B;
         padding: 20px 20px 0px 20px;
         margin-top: 30px;
       }
-   
+
+      h1 {
+          color: white;
+      }
       ion-row {
          align-items: center;
          text-align: center;
@@ -38,5 +47,11 @@ page-signup {
          border-radius: 30px !important;
          border: 1px solid #ffffff;
        }
+   
+       .register-btn {
+         color: #ffffff;
+         font-size: 1.5m;
+       }
     }
+   
   }
