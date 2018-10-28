@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Globals } from '../../Globals';
  
 export class User {
   name: string;
@@ -28,15 +29,34 @@ export class Connector {
   currentUser = null;
   constructor(private http:HttpClient) { }
 
+  public addTask(email, keyword) {
+    return this.http.post(Globals.url + "/addTask", {"email": email, "keyword": keyword}).map(
+      resp => {
+        return resp;
+      }
+    )
+  }
+
+  public getTaskList() {
+    return this.http.get(Globals.url + "/task").map(
+      response => {
+        let tasks = [];
+        for(const key of Object.keys(response)) {
+          tasks.push(response[key]);
+        }
+        return tasks;
+      }
+    )
+  }
   public getUserData(email) {
-    return this.http.post("http://localhost:5000/dashboard", {"email": email}).map(
+    return this.http.post(Globals.url + "/dashboard", {"email": email}).map(
       resp => {
         return resp;
       }
     );
   }
   public getLeaderboard() {
-    return this.http.post("http://localhost:5000/leaderboard", {}).map(
+    return this.http.post(Globals.url + "/leaderboard", {}).map(
       resp => {
         console.log("Leaderboard:", resp);
         return resp;
@@ -44,7 +64,7 @@ export class Connector {
     );
   }
   public getUni(school) {
-    return this.http.post("http://localhost:5000/getUni", {"school": school}).map(
+    return this.http.post(Globals.url + "/getUni", {"school": school}).map(
       resp => {
         return resp;
       }
@@ -56,7 +76,7 @@ export class Connector {
       return Observable.throw("Please enter both email and password.");
     } else {
       console.log(credentials);
-      return this.http.post('http://localhost:5000/dashboard', credentials).map(
+      return this.http.post(Globals.url + '/dashboard', credentials).map(
         res => { 
               this.currentUser = new User(res["name"], credentials.email, res["school"], res["items"], res["totalPoints"], res["universityPoints"], res["suggestions"]);
               return this.currentUser; 
@@ -69,7 +89,7 @@ public register(credentials) {
     if (credentials.email === null || credentials.password === null || credentials.name == null || credentials.school) {
       return Observable.throw("Please enter both email and password.");
     } else {
-      this.http.post('http://localhost:5000/register', credentials).map(
+      this.http.post(Globals.url + '/register', credentials).map(
         res => {
           return res;
         },
@@ -84,7 +104,7 @@ public register(credentials) {
   }
  
   public suggestions() {
-    return this.http.post("http://localhost:5000/getSuggestions", {}).map(
+    return this.http.post(Globals.url + "/getSuggestions", {}).map(
       resp => {
         return resp;
       }

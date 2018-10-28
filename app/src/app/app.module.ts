@@ -16,6 +16,7 @@ import { LeaderboardPage } from "../pages/leaderboard/leaderboard";
 import { RegionPopoverPage } from "../pages/region-popover/region-popover";
 import { InnerSchoolLeaderboardPage } from "../pages/inner-school-leaderboard/inner-school-leaderboard";
 import { Connector } from '../providers/connector/connector';
+import { LocalNotifications } from '@ionic-native/local-notifications';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { Connector } from '../providers/connector/connector';
     StatusBar,
     SplashScreen,
     Connector,
+    LocalNotifications,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

@@ -24,26 +24,9 @@ export class LeaderboardPage {
     initialColleges: any[] = [];
     showSpinner = true;
     yourPoints: any;
+    yourRank: any = 1;
     constructor(public navCtrl: NavController, public navParams: NavParams, private modalCtrl: ModalController, private connector: Connector) {
         this.title = "Leaderboard";
-        this.connector.getUserData(Globals.email).subscribe(
-            data => {
-                this.yourSchool = data["school"];
-                this.yourPoints = data["universityPoints"];
-            }
-        )
-        this.connector.getLeaderboard().subscribe(
-            data => {
-                setTimeout(() => {
-                    for(const key of Object.keys(data)) {
-                        data[key]["rank"] = Number(key) + 1;
-                        this.initialColleges.push(data[key]);
-                    }
-                    this.colleges = this.initialColleges.slice(0);
-                    this.showSpinner = false;
-                }, 1000);
-            }
-        );
     }
 
     openCollege(college) {
@@ -54,8 +37,33 @@ export class LeaderboardPage {
         this.openCollege(this.yourSchool);
     }
 
-    ionViewDidLoad() {
-        // console.log('ionViewDidLoad LeaderboardPage');
+    ionViewWillEnter() {
+        console.log("Entering leaderboard...");
+        this.showSpinner = true;
+        this.colleges = [];
+        this.connector.getUserData(Globals.email).subscribe(
+            data => {
+                this.yourSchool = data["school"];
+                this.yourPoints = data["universityPoints"];
+            }
+        )
+        this.connector.getLeaderboard().subscribe(
+            data => {
+                setTimeout(() => {
+                    this.initialColleges = [];
+                    for(const key of Object.keys(data)) {
+                        data[key]["rank"] = Number(key) + 1;
+                        if(data[key]["school"] == this.yourSchool) {
+                            this.yourRank = data[key]["rank"];
+                        }
+                        this.initialColleges.push(data[key]);
+                    }
+                    this.colleges = this.initialColleges.slice(0);
+                    // console.log("Colleges:", this.colleges);
+                    this.showSpinner = false;
+                }, 1000);
+            }
+        );
     }
 
     filterLeaderboard(event) {
