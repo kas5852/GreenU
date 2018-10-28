@@ -81,9 +81,9 @@ def login():
                         itemDescrip = task[0][0]
                         # this will add to return dictionary
 
-                        d1 = {'itemID': item}
-                        d2 = {'itemDescrip': itemDescrip}
-                        d3 = {'itemPoint': task[0][1]}
+                        d1 = {'keyword': item}
+                        d2 = {'taskdesc': itemDescrip}
+                        d3 = {'points': task[0][1]}
                         dictionary.update(d1)
                         dictionary.update(d2)
                         dictionary.update(d3)
